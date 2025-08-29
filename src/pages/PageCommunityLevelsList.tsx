@@ -96,17 +96,6 @@ const PageCommunityLevelsList = () => {
   return (
     <RootLayout>
       <PageTitle title={t("COMMUNITY_LEVELS")} />
-      <div className="text-gray-600 dark:text-gray-400 mb-2 px-1 sm:px-0 max-w-[348px] sm:max-w-[436px] text-sm w-full mx-auto">
-        {t("DISCOVER_AND_BUILD_COMMUNITY_LEVELS")}{" "}
-        <Link
-          to="/level-builder"
-          className="text-blue-600 font-semibold hover:underline"
-        >
-          {t("LEVEL_BUILDER")}
-        </Link>
-        .
-      </div>
-
       {/* FILTERS */}
       <CommunityLevelsFilters
         showUnique={showUnique}

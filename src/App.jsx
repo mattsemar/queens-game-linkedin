@@ -20,10 +20,8 @@ const App = () => {
       <ThemeProvider attribute="class" defaultTheme="light">
         <Router>
           <Routes>
-            <Route path="/" element={<PageLevelSelection />} />
-            <Route path="/level/:id" element={<PageGameLevel />} />
-            <Route path="/bonus-levels" element={<PageBonusLevelsList />} />
-            <Route path="/bonus-level/:id" element={<PageBonusLevel />} />
+            <Route path="/" element={<PageCommunityLevelsList />} />
+
             <Route
               path="/community-levels"
               element={<PageCommunityLevelsList />}
@@ -32,8 +30,6 @@ const App = () => {
               path="/community-level/:id"
               element={<PageCommunityLevel />}
             />
-            <Route path="/level-builder" element={<PageLevelBuilder />} />
-            <Route path="*" element={<PageNotFound />} />
           </Routes>
         </Router>
         <ThemeSwitcher />

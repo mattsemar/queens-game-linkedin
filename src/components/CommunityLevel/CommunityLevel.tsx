@@ -233,7 +233,7 @@ const CommunityLevel = ({
     setShowWinningScreen(false);
     // Adjust zoom based on level size
     // zoom = 1 for level sizes up to 11, but subtract 0.1 for each increment above that down to a minimum of 0.5
-    const autoZoom = Math.max(Math.min(1, 1 - (levelSize - 11) * 0.1), 0.5);
+    const autoZoom = Math.max(Math.min(1, 1 - (levelSize - 20) * 0.1), 0.5);
 
     setZoomLevel(autoZoom);
 
@@ -294,18 +294,6 @@ const CommunityLevel = ({
               </button>
             </Link>
 
-            <div className="flex items-center space-x-2">
-              <PreviousLevelButton className="disabled:opacity-50">
-                <PreviousIcon />
-              </PreviousLevelButton>
-
-              <h2 className="text-xl text-center">{title}</h2>
-
-              <NextLevelButton className="disabled:opacity-50 mr-2">
-                <NextIcon />
-              </NextLevelButton>
-            </div>
-
             <div className="flex flex-none justify-end">
               <div className="flex items-center">
                 <Queen
@@ -314,20 +302,20 @@ const CommunityLevel = ({
                     completed ? "visible" : "invisible"
                   }`}
                 />
-                <RandomLevelButton className="border border-slate-500 rounded-full p-2 mr-2">
-                  {<Shuffle size="18" />}
-                </RandomLevelButton>
-                <button
-                  onClick={() => {
-                    setBoard(createEmptyBoard(levelSize));
-                    setHasWon(false);
-                    setShowWinningScreen(false);
-                    history.current = [];
-                  }}
-                  className="border border-slate-500 rounded-full p-2 mr-2"
-                >
-                  <ResetIcon size="18" />
-                </button>
+                {/*<RandomLevelButton className="border border-slate-500 rounded-full p-2 mr-2">*/}
+                {/*  {<Shuffle size="18" />}*/}
+                {/*</RandomLevelButton>*/}
+                {/*<button*/}
+                {/*  onClick={() => {*/}
+                {/*    setBoard(createEmptyBoard(levelSize));*/}
+                {/*    setHasWon(false);*/}
+                {/*    setShowWinningScreen(false);*/}
+                {/*    history.current = [];*/}
+                {/*  }}*/}
+                {/*  className="border border-slate-500 rounded-full p-2 mr-2"*/}
+                {/*>*/}
+                {/*  <ResetIcon size="18" />*/}
+                {/*</button>*/}
                 <SettingsDialog
                   showClashingQueens={showClashingQueens}
                   toggleShowClashingQueens={toggleClashingQueens}
@@ -452,22 +440,6 @@ const CommunityLevel = ({
 
         {showInstructions && <HowToPlay />}
 
-        <div className="w-full px-2">
-          <Giscus
-            repo="samimsu/queens-game-linkedin"
-            repoId="R_kgDONCfeAg"
-            category="Announcements"
-            categoryId="DIC_kwDONCfeAs4CnIas"
-            mapping="pathname"
-            strict="1"
-            reactionsEnabled="1"
-            emitMetadata="0"
-            inputPosition="bottom"
-            theme={theme}
-            lang={getGiscusLanguage(i18n.language) || i18n.language}
-            loading="lazy"
-          />
-        </div>
       </div>
     </div>
   );
