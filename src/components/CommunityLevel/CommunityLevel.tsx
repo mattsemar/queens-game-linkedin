@@ -43,6 +43,7 @@ import {
 } from "@/utils/colors";
 import SolveStepList from "@/components/SolveStepList.tsx";
 import solution1 from "@/utils/solution-steps/one.ts";
+import {parseSteps} from "@/lib/instrucionsParse.ts";
 
 interface CommunityLevelProps {
   id: string;
@@ -295,6 +296,18 @@ const CommunityLevel = ({
               zoomLevel={zoomLevel}
               showLetters={showRegionLetters}
             />
+
+            {/*<div className="p-4">*/}
+            <div className="p-4 max-h-[calc(70vh-4rem)] overflow-y-auto w-400">
+
+              <SolveStepList
+                  id="solve-steps"
+                  title="Solve Steps"
+                  description="Follow these steps to solve the puzzle."
+                  steps={parseSteps(solution1.raw)}
+              />
+            </div>
+            {/*</div>*/}
           </div>
 
           <div className="flex justify-between items-center mt-2">
@@ -364,7 +377,15 @@ const CommunityLevel = ({
 
         {showInstructions && <HowToPlay />}
 
-        {<SolveStepList {...solution1} />}
+        {/*<div className="p-4">*/}
+        {/*  <SolveStepList*/}
+        {/*      id="solve-steps"*/}
+        {/*      title="Solve Steps"*/}
+        {/*      description="Follow these steps to solve the puzzle."*/}
+        {/*      steps={parseSteps(solution1.raw)}*/}
+        {/*  />*/}
+        {/*</div>*/}
+
 
       </div>
     </div>
