@@ -1,10 +1,10 @@
-import { useTranslation, Trans } from "react-i18next";
+import {useTranslation, Trans} from "react-i18next";
 import Queen from "../../Queen";
-import { useDirection } from "@/hooks/useDirection";
+import {useDirection} from "@/hooks/useDirection";
 
 const HowToPlay = () => {
-  const { t } = useTranslation();
-  const direction = useDirection();
+    const {t} = useTranslation();
+    const direction = useDirection();
 
   return (
     <div

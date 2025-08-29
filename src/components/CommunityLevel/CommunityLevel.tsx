@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import Giscus from "@giscus/react";
 import { useTheme } from "next-themes";
 import { useTranslation } from "react-i18next";
 import {
@@ -14,9 +13,6 @@ import {
 import Board from "./components/Board";
 import { createEmptyBoard } from "../../utils/board";
 import BackIcon from "../icons/BackIcon";
-import PreviousIcon from "../icons/PreviousIcon";
-import NextIcon from "../icons/NextIcon";
-import ResetIcon from "../icons/ResetIcon";
 import WinningScreen from "./components/WinningScreen";
 import Queen from "../Queen";
 import HowToPlay from "./components/HowToPlay";
@@ -26,8 +22,7 @@ import Button from "../Button";
 import useVisibility from "../../hooks/useVisibility";
 import useGameLogic from "@/hooks/useGameLogic";
 import { CommunityLevel as CommunityLevelType } from "@/utils/types";
-import { getGiscusLanguage } from "@/utils/getGiscusLanguage";
-import Tag from "../Tag";
+
 import { communityLevels } from "@/utils/communityLevels";
 import {
   altoMain,
@@ -46,6 +41,8 @@ import {
   saharaSand,
   turquoiseBlue,
 } from "@/utils/colors";
+import SolveStepList from "@/components/SolveStepList.tsx";
+import solution1 from "@/utils/solution-steps/one.ts";
 
 interface CommunityLevelProps {
   id: string;
@@ -57,13 +54,12 @@ interface CommunityLevelProps {
 
 const CommunityLevel = ({
   id,
-  title,
   level,
   previousLevel,
   nextLevel,
 }: CommunityLevelProps) => {
-  const { theme } = useTheme();
-  const { t, i18n } = useTranslation();
+
+  const { t } = useTranslation();
   const isVisible = useVisibility();
   const [useDefaultColors, setUseDefaultColors] = useState(false);
   const [zoomLevel, setZoomLevel] = useState(1);
@@ -163,69 +159,11 @@ const CommunityLevel = ({
 
   const randomLevel = useMemo(() => getRandomLevel(), [id]);
 
-  const RandomLevelButton: React.FC<{
-    children: React.ReactNode;
-    className: string;
-  }> = ({ children, className }) => {
-    return (
-      <Link to={randomLevel?.path || ""} className="flex">
-        <button
-          disabled={!randomLevel?.path}
-          onClick={() => {
-            if (randomLevel) {
-              setBoard(createEmptyBoard(randomLevel.size));
-              setHasWon(false);
-              setShowWinningScreen(false);
-              history.current = [];
-            }
-          }}
-          className={className}
-        >
-          {children}
-        </button>
-      </Link>
-    );
-  };
 
-  const PreviousLevelButton: React.FC<{
-    children: React.ReactNode;
-    className: string;
-  }> = ({ children, className }) => {
-    return (
-      <Link to={previousLevel?.path || ""} className="flex">
-        <button
-          disabled={!previousLevel?.path}
-          onClick={() => {
-            if (previousLevel) {
-              setBoard(createEmptyBoard(previousLevel.size));
-            }
-          }}
-          className={className}
-        >
-          {children}
-        </button>
-      </Link>
-    );
-  };
 
-  const NextLevelButton: React.FC<{
-    children: React.ReactNode;
-    className: string;
-  }> = ({ children, className }) => {
-    return (
-      <Link to={nextLevel?.path || ""} className="flex">
-        <button
-          disabled={!nextLevel?.path}
-          onClick={() => {
-            if (nextLevel) setBoard(createEmptyBoard(nextLevel?.size));
-          }}
-          className={className}
-        >
-          {children}
-        </button>
-      </Link>
-    );
-  };
+
+
+
 
   useEffect(() => {
     setBoard(createEmptyBoard(levelSize));
@@ -302,20 +240,6 @@ const CommunityLevel = ({
                     completed ? "visible" : "invisible"
                   }`}
                 />
-                {/*<RandomLevelButton className="border border-slate-500 rounded-full p-2 mr-2">*/}
-                {/*  {<Shuffle size="18" />}*/}
-                {/*</RandomLevelButton>*/}
-                {/*<button*/}
-                {/*  onClick={() => {*/}
-                {/*    setBoard(createEmptyBoard(levelSize));*/}
-                {/*    setHasWon(false);*/}
-                {/*    setShowWinningScreen(false);*/}
-                {/*    history.current = [];*/}
-                {/*  }}*/}
-                {/*  className="border border-slate-500 rounded-full p-2 mr-2"*/}
-                {/*>*/}
-                {/*  <ResetIcon size="18" />*/}
-                {/*</button>*/}
                 <SettingsDialog
                   showClashingQueens={showClashingQueens}
                   toggleShowClashingQueens={toggleClashingQueens}
@@ -335,7 +259,7 @@ const CommunityLevel = ({
               level.solutionsCount > 1 ? "justify-between" : "justify-end"
             }`}
           >
-            {level.solutionsCount > 1 && <Tag>{t("MULTIPLE_SOLUTIONS")}</Tag>}
+
             <Timer
               run={timerRunning}
               onTimeUpdate={handleTimeUpdate}
@@ -439,6 +363,8 @@ const CommunityLevel = ({
         </div>
 
         {showInstructions && <HowToPlay />}
+
+        {<SolveStepList {...solution1} />}
 
       </div>
     </div>
