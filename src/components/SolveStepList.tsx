@@ -63,7 +63,7 @@ function SolveStepList({ steps, title, description }: SolveStepListProps) {
                             {step.items.map((item, idx) => (
                                 <li key={idx} className="text-sm text-gray-600">
                                     <span className="font-mono text-gray-800">
-                                        ({item.row}, {item.col}, {item.value})
+                                        {item.coords || ``}
                                     </span>{" "}
                                     - {item.description}
                                 </li>

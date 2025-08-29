@@ -15,7 +15,7 @@ export function parseSteps(data: string) {
             let matchArray = coords.match(/\(\s*(\d+),\s+(\d+),\s+(\w+)\)/)!;
             // console.log("Matches", matchArray, line, "Coords:", coords, "Description:", description);
             const [row, col, value] = matchArray.slice(1);
-            return {row: +row, col: +col, value, description: description.trim()};
+            return {row: +row, col: +col, value, description: description.trim(), coords: `(${row}, ${col}, ${value})`};
         });
         return {stepNumber: +stepNumber, action, techniqueName, items};
     });
