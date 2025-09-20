@@ -107,6 +107,12 @@ function hasDisconnectedColors(board: string[][]) {
   return false;
 }
 
+function getCryptoRandom() {
+  const randomBuffer = new Uint32Array(1);
+  self.crypto.getRandomValues(randomBuffer);
+  return randomBuffer[0] / (0xffffffff + 1);
+}
+
 self.onmessage = async (e) => {
   const { size } = e.data;
   const startTime = Date.now();
@@ -159,6 +165,7 @@ self.onmessage = async (e) => {
     }
   }
 
+  const RATE_AT_DROP = 0.65;
   function computePlacementProbability(
     size: number,
     usedCount: number,
@@ -168,19 +175,19 @@ self.onmessage = async (e) => {
       return 1.0;
     }
     if (usedCount <= 2) {
-      return 0.6;
+      return RATE_AT_DROP;
     }
 
     if (usedCount >= size * size) {
       return 0.0;
     }
-    // linear drop from 0.6 at 2 to 0.1 at size*size
-    return 0.6 - (usedCount - 2) * (0.5 / (size * size - 2));
+    // linear drop from RATE_AT_DROP to 0.1 at size*size
+    return RATE_AT_DROP - (usedCount - 2) * (0.5 / (size * size - 2));
   }
 
   function weightedRandomChoice(weights: number[]): number {
     const totalWeight = weights.reduce((sum, weight) => sum + weight, 0);
-    const randomValue = Math.random() * totalWeight;
+    const randomValue = getCryptoRandom() * totalWeight;
     let cumulativeWeight = 0;
 
     for (let i = 0; i < weights.length; i++) {
@@ -198,28 +205,30 @@ self.onmessage = async (e) => {
       Array(size).fill(" "),
     );
 
-    // Generate all positions and shuffle them
-    const positions: [number, number][] = [];
+    // Generate all startingPositions and shuffle them
+    const startingPositions: [number, number][] = [];
     for (let row = 0; row < size; row++) {
       for (let col = 0; col < size; col++) {
-        positions.push([row, col]);
+        startingPositions.push([row, col]);
       }
     }
-    positions.sort(() => Math.random() * 10 - Math.random() * 10); // Shuffle positions
+    startingPositions.sort(
+      () => getCryptoRandom() * 10 - getCryptoRandom() * 10,
+    ); // Shuffle startingPositions
 
     const usedRows = new Set<number>();
     const usedCols = new Set<number>();
     let labelsRemaining = size;
     const labels = ALL_LABELS.slice(0, size);
 
-    for (const [row, col] of positions) {
+    for (const [row, col] of startingPositions) {
       if (!usedRows.has(row) && !usedCols.has(col)) {
         board[row][col] = labels[labels.length - labelsRemaining];
         if (board[row][col] === undefined) {
           console.log(
             "Ran out of labels!",
             { size, labelsRemaining, row, col, board },
-            positions,
+            startingPositions,
           );
           throw new Error("Ran out of labels");
         }
@@ -282,7 +291,7 @@ self.onmessage = async (e) => {
                     usedColorCount[neighborColor],
                   );
                 }
-                if (Math.random() < placementProbability) {
+                if (getCryptoRandom() < placementProbability) {
                   usedColorCount[neighborColor]++;
                   board[row][col] = neighborColor;
                 }
@@ -447,23 +456,21 @@ self.onmessage = async (e) => {
         }
       } else if (lastLogTime + 10_000 < Date.now()) {
         lastLogTime = Date.now();
-        if (solutionsCount > 1) {
-          console.log(
-            "Generated board has (at least)",
-            solutionsCount,
-            "solutions. Remaining seconds",
-            remainingTimeSeconds,
-            "Attempts",
-            attemptCounter,
-          );
-        } else {
-          console.log(
-            "Generated board has no solutions. Remaining seconds",
-            remainingTimeSeconds,
-            "Attempts",
-            attemptCounter,
-          );
-        }
+        const boardGenerationRate = attemptCounter / (elapsedTimeSeconds + 1);
+        const message = `Generated board has ${solutionsCount > 1 ? "multiple" : "no"} solutions.`;
+
+        console.log(
+          message,
+          "Remaining seconds",
+          remainingTimeSeconds,
+          "Attempts",
+          attemptCounter,
+          "rate",
+          boardGenerationRate,
+          "solutions/s",
+          "elapsed seconds",
+          elapsedTimeSeconds,
+        );
       }
       if (success) {
         break;

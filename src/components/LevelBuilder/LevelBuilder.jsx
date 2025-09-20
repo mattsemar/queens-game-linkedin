@@ -88,7 +88,7 @@ const LevelBuilder = () => {
     []
   );
 
-  const regionKeys = "ABCDEFGHIJK".slice(0, boardSize);
+  const regionKeys = "ABCDEFGHIJKLMNOPQRST".slice(0, boardSize);
   const initialRegionColors = {
     A: lightWisteria,
     B: chardonnay,
@@ -134,12 +134,12 @@ const LevelBuilder = () => {
   };
 
   const handleBoardSizeChange = (newSize) => {
-    if (newSize > 11 || newSize < 6) return;
+    if (newSize > 18 || newSize < 6) return;
     setBoardSize(newSize);
     setBoard(createInitialBoardForBuilder(newSize));
 
     // Update the regions when board size changes
-    const updatedRegionKeys = "ABCDEFGHIJK".slice(0, newSize);
+    const updatedRegionKeys = "ABCDEFGHIJKLMNOPQRS".slice(0, newSize);
     setRegionColors(
       Object.fromEntries(
         updatedRegionKeys
