@@ -83,11 +83,11 @@ const PageGeneratedLevelSizeSelection = () => {
         {t("GENERATE_LEVELS")}
       </div>
 
-      <div className="grid grid-cols-8 sm:grid-cols-10 gap-1 p-1 text-sm w-fit mx-auto">
-        <div className="flex justify-center mb-1 col-span-8 sm:col-span-10">
+      <div className="col-span-7 sm:col-span-10 grid grid-cols-3 sm:grid-cols-4 gap-1">
+        <div className="flex justify-center mb-1 col-span-8 sm:col-span-8">
           {t("BOARD_SIZE")}
         </div>
-        <div className="col-span-1 sm:col-span-10 grid grid-cols-1 sm:grid-cols-4 gap-1">
+        <div className="col-span-7 sm:col-span-8 grid grid-cols-3 sm:grid-cols-4 gap-1">
           {sizes.map((size) => {
             return (
               <GenerateButton
@@ -153,7 +153,7 @@ const PageGeneratedLevelSizeSelection = () => {
           {t("GENERATED_SAMPLES_TITLE")}
         </div>
 
-        <div className="col-span-1 sm:col-span-10 grid grid-cols-1 sm:grid-cols-4 gap-1">
+        <div className="col-span-7 sm:col-span-10 grid grid-cols-4 sm:grid-cols-4 gap-1">
           {sizes.map((size) => {
             return (
               <PrecomputedButton
@@ -166,7 +166,7 @@ const PageGeneratedLevelSizeSelection = () => {
         </div>
       </div>
       <br />
-      <div className="text-gray-600 dark:text-gray-400 mb-2 px-1 sm:px-0 max-w-[100px] sm:max-w-[436px] text-sm w-full mx-11 ">
+      <div className="text-gray-600 dark:text-gray-400 mb-2 px-1 sm:px-0 max-w-[348px] sm:max-w-[436px] text-sm w-full mx-auto">
         {t("GENERATED_SAMPLES_TEXT")}
       </div>
     </RootLayout>

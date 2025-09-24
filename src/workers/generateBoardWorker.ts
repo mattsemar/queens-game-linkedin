@@ -113,6 +113,12 @@ function getCryptoRandom() {
   return randomBuffer[0] / (0xffffffff + 1);
 }
 
+function getCryptoRandomNeg128To127() {
+  const randomBuffer = new Int8Array(1);
+  self.crypto.getRandomValues(randomBuffer);
+  return randomBuffer[0];
+}
+
 self.onmessage = async (e) => {
   const { size } = e.data;
   const startTime = Date.now();
@@ -212,9 +218,7 @@ self.onmessage = async (e) => {
         startingPositions.push([row, col]);
       }
     }
-    startingPositions.sort(
-      () => getCryptoRandom() * 10 - getCryptoRandom() * 10,
-    ); // Shuffle startingPositions
+    startingPositions.sort(() => getCryptoRandomNeg128To127());
 
     const usedRows = new Set<number>();
     const usedCols = new Set<number>();

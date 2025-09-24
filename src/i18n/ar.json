@@ -46,6 +46,7 @@
   "COLOR": {
     "ALTO": "Alto",
     "ALTO_MAIN": "Alto Main",
+    "ATOMIC_TANGERINE": "Atomic Tangerine",
     "ANAKIWA": "Anakiwa",
     "BITTERSWEET": "Bittersweet",
     "CAN_CAN": "Can Can",
@@ -53,18 +54,22 @@
     "CELADON": "Celadon",
     "CHARDONNAY": "Chardonnay",
     "COLD_PURPLE": "Cold Purple",
+    "EMERALD": "Emerald",
     "FEIJOA": "Feijoa",
     "HALF_BAKED": "Half Baked",
     "LAVENDER_ROSE": "Lavender Rose",
+    "LIGHT_GREEN": "Light Green",
     "LIGHT_ORCHID": "Light Orchid",
     "LIGHT_WISTERIA": "Light Wisteria",
     "MAC_N_CHEESE": "Mac n Cheese",
     "MALIBU": "Malibu",
     "MANZ": "Manz",
     "NOMAD": "Nomad",
+    "PERIWINKLE": "Periwinkle",
     "SAHARA_SAND": "Sahara Sand",
     "TALLOW": "Tallow",
-    "TURQUOISE_BLUE": "Turquoise Blue"
+    "TURQUOISE_BLUE": "Turquoise Blue",
+    "WHITE": "White"
   },
   "YES": "نعم",
   "THEME": {

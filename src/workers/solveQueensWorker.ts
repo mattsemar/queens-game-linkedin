@@ -26,13 +26,9 @@ self.onmessage = async (e) => {
       String.fromCharCode("A".charCodeAt(0) + i),
     ).slice(0, N);
     const colorCoords = new Map<string, { row: number; col: number }[]>();
-    const coordColors = new Map<string, string>();
     for (const label of labels) {
-      const coordsForColor = findCoordsForColor(label, board);
-      colorCoords.set(label, coordsForColor);
-      for (const { row, col } of coordsForColor) {
-        coordColors.set(`${row},${col}`, label);
-      }
+        const coordsForColor = findCoordsForColor(label, board);
+        colorCoords.set(label, coordsForColor);
     }
 
     function isSafe(tempBoard: number[][], row: number, col: number): boolean {
@@ -54,7 +50,7 @@ self.onmessage = async (e) => {
       }
 
       // check region
-      const color = coordColors.get(`${row},${col}`);
+      const color = colorBoard[row][col];
       // see if any other of this color have a 1
       const coordsForColor = colorCoords.get(color!);
       if (coordsForColor) {

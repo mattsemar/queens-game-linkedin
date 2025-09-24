@@ -46,6 +46,7 @@
   "COLOR": {
     "ALTO": "Alto",
     "ALTO_MAIN": "Cinza",
+    "ATOMIC_TANGERINE": "Atomic Tangerine",
     "ANAKIWA": "Azul",
     "BITTERSWEET": "Coral",
     "CAN_CAN": "Can Can",
@@ -53,18 +54,22 @@
     "CELADON": "Verde",
     "CHARDONNAY": "Laranjinha",
     "COLD_PURPLE": "Cold Purple",
+    "EMERALD": "Emerald",
     "FEIJOA": "Feijoa",
     "HALF_BAKED": "Azul celeste",
     "LAVENDER_ROSE": "Lavender Rose",
+    "LIGHT_GREEN": "Light Green",
     "LIGHT_ORCHID": "Rosa",
     "LIGHT_WISTERIA": "Lilás",
     "MAC_N_CHEESE": "Mac n Cheese",
     "MALIBU": "Malibu",
     "MANZ": "Manz",
     "NOMAD": "Prata",
+    "PERIWINKLE": "Periwinkle",
     "SAHARA_SAND": "Limão",
     "TALLOW": "Tallow",
-    "TURQUOISE_BLUE": "Ciano"
+    "TURQUOISE_BLUE": "Ciano",
+    "WHITE": "White"
   },
   "YES": "Sim",
   "THEME": {

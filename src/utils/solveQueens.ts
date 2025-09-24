@@ -29,13 +29,9 @@ export async function getSolutions(
   const solutions: number[][][] = [];
   const labels = ALL_LABELS.slice(0, N);
   const colorCoords = new Map<string, { row: number; col: number }[]>();
-  const coordColors = new Map<string, string>();
   for (const label of labels) {
     const coordsForColor = findCoordsForColor(label, board);
     colorCoords.set(label, coordsForColor);
-    for (const { row, col } of coordsForColor) {
-      coordColors.set(`${row},${col}`, label);
-    }
   }
 
   // Create a copy of the input board to work with
@@ -64,7 +60,7 @@ export async function getSolutions(
       }
     }
     // color at row column
-    const color = coordColors.get(`${row},${col}`);
+    const color = board[row][col];
     // see if any other of this color have a 1
     const coordsForColor = colorCoords.get(color!);
     if (coordsForColor) {
@@ -78,7 +74,10 @@ export async function getSolutions(
     return true;
   }
 
-  async function backtrack(row: number, tempBoard: number[][]) {
+  async function backtrack(
+    row: number,
+    tempBoard: number[][],
+  ): Promise<boolean> {
     if (row === N) {
       // Collect queen positions
       const solution = [];
@@ -99,7 +98,7 @@ export async function getSolutions(
         }
         // if (onSolutionFound) await onSolutionFound(solution);
       }
-      return;
+      return false;
     }
 
     for (let col = 0; col < N; col++) {
@@ -110,6 +109,7 @@ export async function getSolutions(
         tempBoard[row][col] = 0; // Backtrack
       }
     }
+    return false;
   }
 
   // Initialize empty board for queen placement

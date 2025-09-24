@@ -8,7 +8,7 @@ interface PrecomputedLinkProps {
 const PrecomputedButton = (input: PrecomputedLinkProps) => {
   return (
     <Link to={input.href} key={input.boardSize}>
-      <button className={`rounded p-1 w-full max-w-md text-white bg-[#F96C51]`}>
+      <button className={`rounded p-1 w-full text-white bg-[#F96C51]`}>
         {input.boardSize}x{input.boardSize}
       </button>
     </Link>
