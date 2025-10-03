@@ -42,6 +42,21 @@ export const markCommunityLevelAsCompleted = (levelId: string) => {
   }
 };
 
+export const markRandomBoardCompleted = (levelId: string) => {
+  const currentState = getRandomBoardState(levelId);
+  if (!currentState.bestTimeInSeconds) {
+    return;
+  }
+  currentState.completed = true;
+  currentState.id = levelId;
+  currentState.state = [];
+
+  localStorage.setItem(
+    getLevelNameFromId(levelId),
+    JSON.stringify(currentState),
+  );
+};
+
 export const recordRandomLevelState = (
   id: string,
   timer: number,
@@ -98,6 +113,7 @@ export const getRandomLevelCompletionTimeInSeconds = (id: string) => {
 export const getRandomBoardState = (
   id: string,
 ): {
+  id: string;
   timeInSeconds: number;
   completed: boolean;
   state: string[][];
@@ -107,6 +123,7 @@ export const getRandomBoardState = (
   const r = localStorage.getItem(getLevelNameFromId(id));
   if (!r) {
     return {
+      id: id,
       completed: false,
       timeInSeconds: 0,
       state: createEmptyBoard(getSizeForLevelId(id)),
@@ -116,6 +133,7 @@ export const getRandomBoardState = (
   }
   const { time, completed, state, bestTimeInSeconds } = JSON.parse(r as string);
   return {
+    id: id,
     completed: completed === true,
     state: state ?? createEmptyBoard(getSizeForLevelId(id)),
     timeInSeconds: time ? Number.parseInt(time) : 0,
@@ -137,9 +155,11 @@ export const getInProgressLevels = () => {
         timeInSeconds: itm.time,
         size: getSizeForLevelId(itm.id),
         completed: itm.completed,
+        previousBest: itm.bestTimeInSeconds,
+        state: itm.state ?? [],
       };
     })
-    .filter((itm) => !itm.completed);
+    .filter((itm) => itm.state.length);
   result.sort((a, b) => a.size - b.size);
   return result;
 };
@@ -152,12 +172,13 @@ export const getCompletedLevels = () => {
     .map((itm) => {
       return {
         id: itm.id,
-        timeInSeconds: itm.time,
+        timeInSeconds: itm.bestTimeInSeconds,
         size: getSizeForLevelId(itm.id),
         completed: itm.completed,
+        state: itm.state ?? [],
       };
     })
-    .filter((itm) => itm.completed);
+    .filter((itm) => !itm.state.length || itm.completed);
   result.sort((a, b) => a.size - b.size);
   return result;
 };
