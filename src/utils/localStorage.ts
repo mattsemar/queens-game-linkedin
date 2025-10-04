@@ -74,7 +74,7 @@ export const recordRandomLevelState = (
 
   const newState = {
     time: timer,
-    state: state,
+    state: completed ? [] : state,
     completed,
     bestTimeInSeconds: completed ? timer : currentState?.bestTimeInSeconds,
     id,
